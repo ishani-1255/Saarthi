@@ -120,6 +120,7 @@ function fileToGenerativePart(path, mimeType) {
 app.get("/index", isLoggedIn, (req, res) => res.render("chat.ejs"));
 app.get("/main", (req, res) => res.render("index.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
+app.get("/emergency", isLoggedIn, (req, res) => res.render("emergency.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
 app.get("/testimonial", isLoggedIn, (req, res) =>
@@ -291,6 +292,19 @@ app.post("/chat", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error communicating with the Python chatbot." });
+  }
+});
+
+app.post("/emergency", async (req, res) => {
+  const { search_query } = req.body;
+
+  try {
+      const response = await axios.post("http://127.0.0.1:5000/chat", {
+          search_query,
+      });
+      res.json(response.data);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
   }
 });
 

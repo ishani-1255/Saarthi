@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            display: none;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #chatbot-header {
+            background: #007bff;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #chatbot-body {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        #chatbot-footer {
+            display: flex;
+            padding: 10px;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #send-btn {
+            padding: 5px 10px;
+            margin-left: 5px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot-container">
+        <div id="chatbot-header">Emergency Chatbot</div>
+        <div id="chatbot-body"></div>
+        <div id="chatbot-footer">
+            <input type="text" id="chat-input" placeholder="Type your query...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <button id="chatbot-toggle" style="position: fixed; bottom: 20px; right: 20px;">💬 Chat</button>
+
+    <script>
+        const chatbotContainer = document.getElementById("chatbot-container");
+        const chatbotToggle = document.getElementById("chatbot-toggle");
+        const chatInput = document.getElementById("chat-input");
+        const chatBody = document.getElementById("chatbot-body");
+        const sendBtn = document.getElementById("send-btn");
+
+        chatbotToggle.addEventListener("click", () => {
+            chatbotContainer.style.display =
+                chatbotContainer.style.display === "none" ? "block" : "none";
+        });
+
+        sendBtn.addEventListener("click", async () => {
+            const query = chatInput.value;
+            if (!query) return;
+
+            chatBody.innerHTML += `<div><b>You:</b> ${query}</div>`;
+            chatInput.value = "";
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ search_query: query }),
+            });
+
+            const data = await response.json();
+            chatBody.innerHTML += `<div><b>Bot:</b> ${data.answer || "Error occurred."}</div>`;
+        });
+    </script>
+</body>
+</html>
