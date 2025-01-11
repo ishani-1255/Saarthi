@@ -256,23 +256,37 @@ app.post("/ask", isLoggedIn, async (req, res) => {
 });
 
 
-app.post("/chat", isLoggedIn, async (req, res) => {
-  try {
-    const userInput = req.body.message;
+app.post('/chat', async (req, res) => {
+    const userMessage = req.body.user_input;
 
-    // Replace Gemini Pro with axios request to your local chat service
-    const response = await axios.post('http://localhost:5000/chat', {
-      prompt: userInput,
-      model: 'llama-2-7b-chat-gguf' // You can change this model as needed
-    });
+    if (!userMessage) {
+        return res.status(400).json({ error: 'user_input is required' });
+    }
 
-    res.json({ message: response.data.response });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
+    try {
+        // Send user input to Python chatbot
+        const pythonResponse = await axios.post('http://localhost:8000/chat', { user_input: userMessage });
+        const botReply = pythonResponse.data.bot_reply || 'No response from the chatbot.';
+
+        // Send bot's reply back to the frontend
+        res.json({ bot_reply: botReply });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: 'Error communicating with the Python chatbot.' });
+    }
 });
 
+// Route to reset the chatbot conversation
+app.post('/reset', async (req, res) => {
+    try {
+        // Send a reset request to Python chatbot
+        await axios.post('http://localhost:8000/reset');
+        res.json({ message: 'Conversation reset successfully' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: 'Error resetting the conversation.' });
+    }
+});
 
 // Directory for saving uploaded files
 const UPLOAD_DIR = path.join(__dirname, 'uploads');
