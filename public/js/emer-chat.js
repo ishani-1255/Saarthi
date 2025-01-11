@@ -19,110 +19,6 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background: #ff4444;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .ec-chat-icon:hover {
-            transform: scale(1.1);
-        }
-
-        /* Medical Cross */
-        .medical-cross {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: white;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .medical-cross::before,
-        .medical-cross::after {
-            content: '';
-            position: absolute;
-            background: #ff4444;
-        }
-
-        .medical-cross::before {
-            width: 16px;
-            height: 4px;
-            top: 10px;
-            left: 4px;
-        }
-
-        .medical-cross::after {
-            width: 4px;
-            height: 16px;
-            top: 4px;
-            left: 10px;
-        }
-
-        /* Loading Animation */
-        .ec-loading {
-            display: none;
-            margin: 10px 0;
-        }
-
-        .ec-loading.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .ec-loading-dot {
-            width: 8px;
-            height: 8px;
-            background: #ff4444;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-
-        .ec-loading-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .ec-loading-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(0.3);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .ec-chatbot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999999;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .ec-chatbot * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .ec-chat-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
             background: linear-gradient(45deg, #ff4444, #ff6b6b);
             display: flex;
             align-items: center;
@@ -224,36 +120,30 @@
         .ec-send-btn:hover {
             transform: scale(1.1);
         }
-
-        
-    
-        [Previous CSS remains the same...]
     `;
 
-    
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
 
-
-    // Updated chatbot HTML
+    // Create chatbot HTML
     const chatbotHTML = `
         <div class="ec-chatbot">
             <div class="ec-chat-icon" id="ec-toggle-chat">
-                <div class="medical-cross"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
             </div>
             <div class="ec-chat-box" id="ec-chat-box">
                 <div class="ec-chat-header">
-                    <span>Medical Assistant</span>
+                    <span>Emergency Assistant</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;" id="ec-minimize">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
                 </div>
                 <div class="ec-messages" id="ec-messages"></div>
-                <div class="ec-loading" id="ec-loading">
-                    <div class="ec-loading-dot"></div>
-                    <div class="ec-loading-dot"></div>
-                    <div class="ec-loading-dot"></div>
-                </div>
                 <div class="ec-input-area">
-                    <input type="text" class="ec-input" id="ec-input" placeholder="Describe your medical concern...">
+                    <input type="text" class="ec-input" id="ec-input" placeholder="Describe your emergency situation...">
                     <button class="ec-send-btn" id="ec-send">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -265,10 +155,35 @@
         </div>
     `;
 
-    // Modified initChatbot function
+    // Insert chatbot into page
+    const chatbotContainer = document.createElement('div');
+    chatbotContainer.innerHTML = chatbotHTML;
+    document.body.appendChild(chatbotContainer);
+
+    // Initialize chatbot functionality
     function initChatbot() {
-        // [Previous variable declarations remain the same...]
-        const loadingIndicator = document.getElementById('ec-loading');
+        const toggleBtn = document.getElementById('ec-toggle-chat');
+        const minimizeBtn = document.getElementById('ec-minimize');
+        const chatBox = document.getElementById('ec-chat-box');
+        const messagesContainer = document.getElementById('ec-messages');
+        const input = document.getElementById('ec-input');
+        const sendBtn = document.getElementById('ec-send');
+
+        function toggleChat() {
+            chatBox.classList.toggle('show');
+            if (chatBox.classList.contains('show') && messagesContainer.children.length === 0) {
+                addMessage("Hello! I'm your emergency assistant. How can I help you today?", false);
+            }
+        }
+
+        function addMessage(text, isUser) {
+            const message = document.createElement('div');
+            message.classList.add('ec-message');
+            message.classList.add(isUser ? 'ec-user-message' : 'ec-bot-message');
+            message.textContent = text;
+            messagesContainer.appendChild(message);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
 
         async function sendMessage() {
             const text = input.value.trim();
@@ -276,9 +191,6 @@
 
             addMessage(text, true);
             input.value = '';
-            
-            // Show loading animation
-            loadingIndicator.classList.add('show');
 
             try {
                 const response = await fetch('http://localhost:5000/emergency', {
@@ -293,14 +205,21 @@
                 addMessage(data.response, false);
             } catch (error) {
                 addMessage('Sorry, I\'m having trouble connecting to the server.', false);
-            } finally {
-                // Hide loading animation
-                loadingIndicator.classList.remove('show');
             }
         }
 
-        // [Rest of the event listeners remain the same...]
+        toggleBtn.addEventListener('click', toggleChat);
+        minimizeBtn.addEventListener('click', toggleChat);
+        sendBtn.addEventListener('click', sendMessage);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
     }
 
-    // [Rest of the initialization code remains the same...]
+    // Initialize when DOM is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initChatbot);
+    } else {
+        initChatbot();
+    }
 })();
