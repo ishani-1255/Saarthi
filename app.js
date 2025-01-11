@@ -22,7 +22,7 @@ const Profile = require("./model/profile.js");
 
 const app = express();
 const dbUrl = process.env.ATLASDB_URL;
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI("AIzaSyAB7blS2dxS4vZk83B0f-CbhRpwfOgyiWM");
 app.locals.AppName = "Saarthi";
 
 // Configure storage for uploaded files
@@ -118,7 +118,7 @@ function fileToGenerativePart(path, mimeType) {
 
 // Routes
 app.get("/index", isLoggedIn, (req, res) => res.render("chat.ejs"));
-app.get("/home", isLoggedIn, (req, res) => res.render("home.ejs"));
+app.get("/main", (req, res) => res.render("index.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
