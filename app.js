@@ -23,6 +23,8 @@ const Profile = require("./model/profile.js");
 const app = express();
 const dbUrl = process.env.ATLASDB_URL;
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+app.locals.AppName = "Saarthi";
+
 
 // Configure storage for uploaded files
 const storage = multer.diskStorage({

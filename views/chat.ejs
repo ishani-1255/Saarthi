@@ -7,14 +7,21 @@
     <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div id="chat-window">
-            <div id="messages"></div>
+    <div class="background">
+        <div class="overlay"></div>
+        <div class="chat-container">
+            <header class="chat-header">
+                <h1>Learn with AI</h1>
+                <p>Your interactive educational assistant</p>
+            </header>
+            <div id="chat-window">
+                <div id="messages"></div>
+            </div>
+            <form id="chat-form">
+                <input type="text" id="user-input" placeholder="Ask a question or say hi!" required>
+                <button type="submit">Send</button>
+            </form>
         </div>
-        <form id="chat-form">
-            <input type="text" id="user-input" placeholder="Type your message..." required>
-            <button type="submit">Send</button>
-        </form>
     </div>
 
     <script src="/js/chat.js"></script>
