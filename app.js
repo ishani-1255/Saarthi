@@ -122,6 +122,7 @@ app.get("/main", (req, res) => res.render("index.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/emergency", isLoggedIn, (req, res) => res.render("emergency.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
+app.get("/landingPage", isLoggedIn, (req, res) => res.render("landing_page.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
 app.get("/testimonial", isLoggedIn, (req, res) =>
   res.render("testimonial.ejs")
@@ -350,7 +351,7 @@ app.get("/logout", (req, res, next) => {
       console.error("Error logging out:", err);
       return next(err);
     }
-    res.redirect("/main");
+    res.redirect("/landing_page");
   });
 });
 

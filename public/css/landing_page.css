@@ -1,0 +1,205 @@
+/* General Reset */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+body, h1, h2, p, ul, li, a, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: #30304A;
+    color: #E3D8F1;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #DABECA;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(154, 50, 138, 0.1) 0%, rgba(48, 48, 74, 0.1) 100%);
+    pointer-events: none;
+}
+
+.left-half {
+    background: linear-gradient(135deg, #9A328A 0%, #6A1F5F 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    color: white;
+    width: 60%;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-section img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.logo-section h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.quote-section {
+    font-size: 1.7rem;
+    text-align: left;
+    line-height: 1.8;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.quote-section p:not(.attribution) {
+    animation: fadeInOutUp 6s infinite;
+    opacity: 0;
+}
+
+.quote-section p:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.quote-section p:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.quote-section p:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.quote-section .highlight-knowledge {
+    color: #FFD700;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.quote-section .highlight-action {
+    color: #00FF88;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.quote-section .attribution {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 20px;
+    animation: fadeIn 1s forwards;
+    animation-delay: 1.5s;
+    opacity: 0;
+}
+
+.right-half {
+    width: 40%;
+    display: flex;
+    background: linear-gradient(135deg, #30304A 0%, #1A1A2E 100%);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-size: x-large;
+    padding: 40px;
+}
+
+.right-half h4 {
+    color: #E3D8F1;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(227, 216, 241, 0.3);
+}
+
+.right-half .button-group {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.right-half a {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #0088A3 0%, #006B82 100%);
+    color: #E3D8F1;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(227, 216, 241, 0.1);
+    letter-spacing: 1px;
+}
+
+.right-half a:hover {
+    background: linear-gradient(135deg, #9A328A 0%, #6A1F5F 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(154, 50, 138, 0.3);
+}
+
+@keyframes fadeInOutUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -19,12 +19,12 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            background: linear-gradient(45deg, #34a853, #5cb85c);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            box-shadow: 0 4px 15px rgba(52, 168, 83, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -32,13 +32,17 @@
             transform: scale(1.1);
         }
 
+        .ec-chat-icon svg {
+            color: white;
+        }
+
         .ec-chat-box {
             display: none;
             position: fixed;
             bottom: 100px;
             right: 20px;
-            width: 400px;
-            height: 600px;
+            width: 500px;
+            height: 700px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.2);
@@ -50,7 +54,7 @@
         }
 
         .ec-chat-header {
-            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            background: linear-gradient(45deg, #34a853, #5cb85c);
             color: white;
             padding: 20px;
             font-size: 18px;
@@ -83,7 +87,7 @@
         }
 
         .ec-user-message {
-            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            background: linear-gradient(45deg, #34a853, #5cb85c);
             color: white;
             margin-left: auto;
             border-bottom-right-radius: 5px;
@@ -92,6 +96,7 @@
         .ec-input-area {
             display: flex;
             padding: 20px;
+            margin-top: auto;
             background: white;
             border-top: 1px solid #eee;
         }
@@ -107,7 +112,7 @@
         }
 
         .ec-send-btn {
-            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            background: linear-gradient(45deg, #34a853, #5cb85c);
             color: white;
             border: none;
             border-radius: 50%;
@@ -120,6 +125,28 @@
         .ec-send-btn:hover {
             transform: scale(1.1);
         }
+
+        .ec-loading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ec-loading::after {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #34a853;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     `;
 
     const styleSheet = document.createElement("style");
@@ -130,8 +157,9 @@
     const chatbotHTML = `
         <div class="ec-chatbot">
             <div class="ec-chat-icon" id="ec-toggle-chat">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
             </div>
             <div class="ec-chat-box" id="ec-chat-box">
@@ -145,7 +173,7 @@
                 <div class="ec-input-area">
                     <input type="text" class="ec-input" id="ec-input" placeholder="Describe your emergency situation...">
                     <button class="ec-send-btn" id="ec-send">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
@@ -185,12 +213,27 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
+        function showLoading() {
+            const loader = document.createElement('div');
+            loader.classList.add('ec-loading');
+            loader.id = 'ec-loading';
+            messagesContainer.appendChild(loader);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideLoading() {
+            const loader = document.getElementById('ec-loading');
+            if (loader) loader.remove();
+        }
+
         async function sendMessage() {
             const text = input.value.trim();
             if (!text) return;
 
             addMessage(text, true);
             input.value = '';
+
+            showLoading();
 
             try {
                 const response = await fetch('http://localhost:5000/emergency', {
@@ -202,8 +245,10 @@
                 });
 
                 const data = await response.json();
+                hideLoading();
                 addMessage(data.response, false);
             } catch (error) {
+                hideLoading();
                 addMessage('Sorry, I\'m having trouble connecting to the server.', false);
             }
         }
