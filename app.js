@@ -50,27 +50,23 @@ if (process.env.NODE_ENV != "production") {
   
   
   const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Directory to save uploaded files
     },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
+    filename: (req, file, cb) => {
+        const uniqueName = Date.now() + '-' + file.originalname;
+        cb(null, uniqueName); // Unique file name
     }
-  });
+});
+
+const upload = multer({ storage: storage });
   
-  const upload = multer({ 
-    dest: 'uploads/',
-    fileFilter: (req, file, cb) => {
-        // Only allow PDF files
-        if (file.mimetype === 'application/pdf') {
-            cb(null, true);
-        } else {
-            cb(new Error('Only PDF files are allowed'), false);
-        }
-    }
-  });
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
   
-  const upload = multer({ storage });
+//   const upload = multer({ storage });
   
   const store = MongoStore.create({
     mongoUrl: process.env.ATLASDB_URL,
@@ -161,3 +157,25 @@ if (process.env.NODE_ENV != "production") {
         res.status(500).json({ error: 'Error communicating with the Python chatbot.' });
     }
   });
+
+
+  app.post('/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    console.log('Uploaded file URL:', fileUrl); // Log downloadable link
+
+    // Send response to the frontend
+    res.json({ message: 'File uploaded successfully', fileUrl });
+});
+
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
