@@ -1,3 +1,3 @@
 # Saarthi 
 ## "Saarthi: Where Curiosity Meets Clarity."
-![logo](Saarthi_Logo.jpeg)
+![logo](Logo_Saarthi.jpeg)
