@@ -152,39 +152,6 @@
             </button>
           </div>
 
-          <!-- On/Off toggle for enabling document upload -->
-          <div class="upload-toggle">
-            <label for="upload-switch" class="toggle-label">
-              <span>Enable Upload</span>
-              <input type="checkbox" id="upload-switch" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <!-- File upload input -->
-          <div
-            id="upload-container"
-            class="upload-container"
-            style="display: none"
-          >
-            <label for="file-upload" class="file-label">
-              Upload Document:
-            </label>
-            <input
-              type="file"
-              id="file-upload"
-              name="file"
-              accept="application/pdf"
-            />
-            <button
-              type="button"
-              id="upload-btn"
-              class="upload-button"
-              disabled
-            >
-              Upload
-            </button>
-          </div>
 
           <div class="input-features">
             <button type="button" class="feature-button">
@@ -245,58 +212,6 @@
     </main>
 
     <script src="/js/chat.js"></script>
-    <script>
-      document
-        .getElementById("upload-switch")
-        .addEventListener("change", function () {
-          const uploadContainer = document.getElementById("upload-container");
-          const uploadInput = document.getElementById("file-upload");
-          const uploadBtn = document.getElementById("upload-btn");
-
-          if (this.checked) {
-            uploadContainer.style.display = "block";
-            uploadInput.disabled = false;
-            uploadBtn.disabled = false;
-          } else {
-            uploadContainer.style.display = "none";
-            uploadInput.disabled = true;
-            uploadBtn.disabled = true;
-          }
-        });
-
-      document
-        .getElementById("file-upload")
-        .addEventListener("change", function () {
-          const uploadBtn = document.getElementById("upload-btn");
-          uploadBtn.disabled = !this.files.length; // Enable the button if a file is selected
-        });
-
-      document
-        .getElementById("chat-form")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          const formData = new FormData(this); // Get form data
-
-          try {
-            const response = await fetch("/upload", {
-              method: "POST",
-              body: formData,
-            });
-
-            if (!response.ok) {
-              throw new Error("File upload failed");
-            }
-
-            const result = await response.json();
-            alert(
-              `File uploaded successfully! Download link: ${result.fileUrl}`
-            );
-          } catch (error) {
-            console.error(error.message);
-            alert("Error uploading file");
-          }
-        });
-    </script>
+    
   </body>
 </html>
