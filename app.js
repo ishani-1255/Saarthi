@@ -11,6 +11,11 @@ const PYTHON_SERVER_URL = "http://localhost:8000/chat"; // URL of the Python cha
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" directory
 
+// Route to serve the chatbot webpage
+app.get("/chat", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "chat.ejs"));
+});
+
 // Chat API endpoint
 app.post("/chat", async (req, res) => {
     try {
