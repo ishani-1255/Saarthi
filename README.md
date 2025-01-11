@@ -1,3 +1,3 @@
 # Saarthi 
-## Empowering Minds, Nurturing Health
-![logo](Saarthi_Logo.jpeg)
+## "Saarthi: Where Curiosity Meets Clarity."
+![logo](Logo_Saarthi.jpeg)
