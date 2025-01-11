@@ -1,1 +1,3 @@
-# Hackerse-5.0 
+# Saarthi
+## Saarthi - Where curiosity meets clarity
+![logo](Logo_Saarthi.jpeg)
