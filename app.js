@@ -1,37 +1,37 @@
-if (process.env.NODE_ENV != "production") {
-    require("dotenv").config();
-  }
-  
-  const cloudinary = require("cloudinary").v2;
-  const express = require("express");
-  const { spawn } = require('child_process'); 
-  const app = express();
-  const fs = require("fs");
-  const mongoose = require("mongoose");
-  const path = require("path");
-  const methodOverride = require("method-override");
-  const ejsMate = require("ejs-mate");
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
+const path = require("path");
 
-  const session = require("express-session");
-  const busboy = require('busboy');
-  const axios = require('axios');
-  
-  const bodyParser = require("body-parser");
-  const MongoStore = require("connect-mongo");
-  const LocalStrategy = require("passport-local");
-  const passport = require("passport");
-  const flash = require("connect-flash");
-//   const { isLoggedIn } = require("./middleware.js");0
-  const multer = require("multer");
-  
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
-  
-  app.listen(3000, () => {
-    console.log("Serving on port 3000");
-  } );
+const app = express();
+const PORT = 5400; // Port for the Node.js server
+const PYTHON_SERVER_URL = "http://localhost:8000/chat"; // URL of the Python chatbot backend
 
-  app.get("/", (req, res) => {
-    res.render("chat");
-  } );
+// Middleware
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" directory
+
+// Chat API endpoint
+app.post("/chat", async (req, res) => {
+    try {
+        const userMessage = req.body.message;
+        if (!userMessage) {
+            return res.status(400).json({ error: "Message is required" });
+        }
+
+        // Send the user message to the Python backend
+        const response = await axios.post(PYTHON_SERVER_URL, { user_input: userMessage });
+
+        // Return the chatbot's response to the frontend
+        const botReply = response.data.bot_reply;
+        res.json({ message: botReply });
+    } catch (error) {
+        console.error("Error communicating with the Python backend:", error.message);
+        res.status(500).json({ error: "Failed to communicate with chatbot" });
+    }
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Node.js server is running on http://localhost:${PORT}`);
+});
