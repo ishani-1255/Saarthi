@@ -258,18 +258,6 @@ app.post(
   })
 );
 
-// Chat route
-// app.post(
-//   "/chat",
-//   isLoggedIn,
-//   asyncHandler(async (req, res) => {
-//     const userInput = req.body.message;
-//     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-//     const result = await model.generateContent(userInput);
-//     const response = await result.response;
-//     res.json({ message: response.text() });
-//   })
-// );
 
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.user_input;
@@ -295,19 +283,6 @@ app.post("/chat", async (req, res) => {
       .json({ error: "Error communicating with the Python chatbot." });
   }
 });
-
-// app.post("/emergency", async (req, res) => {
-//   const { search_query } = req.body;
-
-//   try {
-//       const response = await axios.post("http://127.0.0.1:5000/emergency", {
-//           search_query,
-//       });
-//       res.json(response.data);
-//   } catch (error) {
-//       res.status(500).json({ error: error.message });
-//   }
-// });
 
 app.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
@@ -351,7 +326,7 @@ app.get("/logout", (req, res, next) => {
       console.error("Error logging out:", err);
       return next(err);
     }
-    res.redirect("/landing_page");
+    res.redirect("/landingPage");
   });
 });
 

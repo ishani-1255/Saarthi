@@ -155,8 +155,8 @@ body {
   75% { transform: translateX(10px); }
 }
 .container{
-  scale: 1.2;
+  scale: 1.5;
   position: fixed;
-  top: 10%;
+  top: 21%;
   left: 10%;
 }
