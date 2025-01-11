@@ -295,18 +295,18 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-app.post("/emergency", async (req, res) => {
-  const { search_query } = req.body;
+// app.post("/emergency", async (req, res) => {
+//   const { search_query } = req.body;
 
-  try {
-      const response = await axios.post("http://127.0.0.1:5000/chat", {
-          search_query,
-      });
-      res.json(response.data);
-  } catch (error) {
-      res.status(500).json({ error: error.message });
-  }
-});
+//   try {
+//       const response = await axios.post("http://127.0.0.1:5000/emergency", {
+//           search_query,
+//       });
+//       res.json(response.data);
+//   } catch (error) {
+//       res.status(500).json({ error: error.message });
+//   }
+// });
 
 app.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {

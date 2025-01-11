@@ -3,97 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
+    <title>Emergency Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        #chatbot-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #chatbot {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 300px;
-            height: 400px;
-            display: none;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
         }
 
-        #chatbot-header {
-            background: #007bff;
-            color: #fff;
-            padding: 10px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        #chatbot-body {
-            padding: 10px;
-            height: 300px;
-            overflow-y: auto;
-        }
-
-        #chatbot-footer {
+        .chat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
             display: flex;
-            padding: 10px;
-        }
-
-        #chat-input {
-            flex: 1;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        #send-btn {
-            padding: 5px 10px;
-            margin-left: 5px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chat-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .chat-icon i {
+            color: white;
+            font-size: 28px;
+        }
+
+        .chat-box {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+
+        .chat-box.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .chat-header {
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header .title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header .status {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-messages {
+            height: 450px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.4;
+            position: relative;
+            animation: messageAppear 0.3s ease;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: white;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-message {
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 2px 10px rgba(255,68,68,0.2);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #eee;
+            border-radius: 25px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .chat-input input:focus {
+            border-color: #ff4444;
+        }
+
+        .chat-input button {
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-input button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255,68,68,0.3);
+        }
+
+        .chat-input button i {
+            font-size: 18px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #ff4444;
+            display: inline-block;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
     </style>
 </head>
 <body>
-    <div id="chatbot-container">
-        <div id="chatbot-header">Emergency Chatbot</div>
-        <div id="chatbot-body"></div>
-        <div id="chatbot-footer">
-            <input type="text" id="chat-input" placeholder="Type your query...">
-            <button id="send-btn">Send</button>
+    <div id="chatbot">
+        <div class="chat-icon" onclick="toggleChat()">
+            <i class="fas fa-comment-medical"></i>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="title">
+                    <i class="fas fa-ambulance"></i>
+                    <div>
+                        <div>Emergency Assistant</div>
+                        <div class="status">Online - Ready to help</div>
+                    </div>
+                </div>
+                <button class="close-btn" onclick="toggleChat()">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="typing-indicator" id="typingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Describe your emergency situation...">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
         </div>
     </div>
 
-    <button id="chatbot-toggle" style="position: fixed; bottom: 20px; right: 20px;">💬 Chat</button>
-
     <script>
-        const chatbotContainer = document.getElementById("chatbot-container");
-        const chatbotToggle = document.getElementById("chatbot-toggle");
-        const chatInput = document.getElementById("chat-input");
-        const chatBody = document.getElementById("chatbot-body");
-        const sendBtn = document.getElementById("send-btn");
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.classList.toggle('show');
+            
+            // Show welcome message if chat is empty
+            if (chatBox.classList.contains('show') && 
+                document.getElementById('chatMessages').children.length <= 1) {
+                setTimeout(() => {
+                    addMessage('Hello! I\'m your emergency assistant. I\'m here to provide immediate guidance in emergency situations. How can I help you today?');
+                }, 500);
+            }
+        }
 
-        chatbotToggle.addEventListener("click", () => {
-            chatbotContainer.style.display =
-                chatbotContainer.style.display === "none" ? "block" : "none";
-        });
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'block';
+        }
 
-        sendBtn.addEventListener("click", async () => {
-            const query = chatInput.value;
-            if (!query) return;
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'none';
+        }
 
-            chatBody.innerHTML += `<div><b>You:</b> ${query}</div>`;
-            chatInput.value = "";
+        function addMessage(message, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            
+            // Insert before typing indicator
+            chatMessages.insertBefore(messageDiv, document.getElementById('typingIndicator'));
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
 
-            const response = await fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ search_query: query }),
-            });
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
 
-            const data = await response.json();
-            chatBody.innerHTML += `<div><b>Bot:</b> ${data.answer || "Error occurred."}</div>`;
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                const response = await fetch('http://localhost:5000/emergency', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query: message })
+                });
+
+                const data = await response.json();
+                
+                // Hide typing indicator before showing response
+                hideTypingIndicator();
+                
+                // Add bot response with a slight delay for natural feeling
+                setTimeout(() => {
+                    addMessage(data.response || 'Sorry, I could not process your request.');
+                }, 500);
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('Sorry, I\'m having trouble connecting to the server.');
+            }
+        }
+
+        // Handle Enter key
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
         });
     </script>
 </body>

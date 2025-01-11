@@ -1,84 +1,162 @@
-/* styles.css */
-.roboto-medium {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-  .app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: ;
-  }
-  
-  .login-container {
-    width:950px;
-    height:525px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .left-section {
-    flex: 1;
-    padding: 30px;
-    border-right: 1px solid #ccc;
-    
-  }
-  
-  .right-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-  
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    padding:5px;
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  input[type='email'],
-  input[type='tel'],
-  input[type='number'],
-  input[type='text'],
-  input[type='password']{
-    width: calc(100% - 20px);
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 18px;
-    outline: none;
-  }
-  
-  button {
-    background-color: #06BBCC;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  h2 {
-    margin: 12px;
-  }
-  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.suc{
+  scale:0.5;
+  position: fixed;
+  top:40%;
+  left: 60%;
+
+}
+.pow{
+  scale:0.7;
+  position: fixed;
+  top:10%;
+  left: 35%;
+}
+.read{
+  scale:0.6;
+  position: fixed;
+  top:0%;
+  left: 60%;
+}
+.reading{
+  scale:0.6;
+  position: fixed;
+  top:45%;
+  left: 35%;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #9A328A, #30304A);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: rgba(227, 216, 241, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+
+}
+
+.title {
+  font-size: 2rem;
+  color: #30304A;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.input-field {
+  position: relative;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.input-field i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #DABECA;
+  font-size: 18px;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 12px 30px 12px 45px;
+  border: none;
+  border-radius: 12px;
+  background: #E3D8F1;
+  outline: none;
+  font-size: 16px;
+  color: #30304A;
+}
+
+.input-field input:focus {
+  background: #FFFFFF;
+  box-shadow: 0 0 10px rgba(154, 50, 138, 0.5);
+}
+
+.btn {
+  width: 100%;
+  height: 45px;
+  background: #9A328A;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #B041A6;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(154, 50, 138, 0.5);
+}
+
+.toggle-container {
+  margin-top: 15px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #9A328A;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.toggle-btn:hover {
+  color: #B041A6;
+}
+
+.social-media {
+  margin-top: 20px;
+}
+
+.social-icon {
+  color: #9A328A;
+  margin: 0 10px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  color: #B041A6;
+}
+.error-message {
+  color: #dc2626; /* Red for error */
+  font-size: 14px;
+  margin-top: 5px;
+  display: none; /* Hidden by default */
+}
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+.container{
+  scale: 1.2;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+}

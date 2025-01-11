@@ -1,80 +1,73 @@
-# app.py
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+import os
 from groclake.vectorlake import VectorLake
 from groclake.datalake import DataLake
 from groclake.modellake import ModelLake
 
 app = Flask(__name__)
+CORS(app)
 
-# Initialize instances
+# Initialize your API keys (make sure these are set in your environment)
+GROCLAKE_API_KEY = os.environ.get('GROCLAKE_API_KEY')
+GROCLAKE_ACCOUNT_ID = os.environ.get('GROCLAKE_ACCOUNT_ID')
+
+os.environ['GROCLAKE_API_KEY'] = '43ec517d68b6edd3015b3edc9a11367b'
+os.environ['GROCLAKE_ACCOUNT_ID'] = '7376846f01e0b6e5f1568fef7b48a148'
+
+# Initialize lakes
 vectorlake = VectorLake()
-datalake = DataLake()
 modellake = ModelLake()
 
-@app.route('/chat', methods=['POST'])
-def chatbot_handler():
+@app.route('/emergency', methods=['POST'])
+def chat():
     try:
-        # Get the search query from the request
-        data = request.get_json()
-        search_query = data.get('search_query', '')
+        data = request.json
+        query = data.get('query')
 
-        if not search_query:
-            return jsonify({"error": "No search query provided."}), 400
+        if not query:
+            return jsonify({"error": "No query provided"}), 400
 
-        # Generate vector for the search query
-        vector_search_data = vectorlake.generate(search_query)
-        search_vector = vector_search_data.get("vector")
+        # Generate vector for search
+        vector_data = vectorlake.generate(query)
+        search_vector = vector_data.get("vector")
 
         if not search_vector:
-            return jsonify({"error": "Search vector generation failed."}), 500
+            return jsonify({"response": "I'm sorry, I couldn't process your query. Please try again."}), 200
 
-        # Perform vector search in VectorLake
-        vectorlake_search_request = {
+        # Prepare and perform vector search
+        search_request = {
             "vector": search_vector,
             "vector_type": "text",
-            "vector_document": search_query,
-            "metadata": {}
-        }
-        search_response = vectorlake.search(vectorlake_search_request)
-        search_results = search_response.get("results", [])
-
-        if not search_results:
-            return jsonify({"error": "No relevant search results found."}), 404
-
-        # Combine relevant documents into enriched context
-        enriched_context = []
-        token_count = 0
-        for result in search_results:
-            doc_content = result.get("vector_document", "")
-            doc_tokens = len(doc_content.split())
-
-            if token_count + doc_tokens <= 1000:  # Adjust limit dynamically
-                enriched_context.append(doc_content)
-                token_count += doc_tokens
-            else:
-                break
-
-        enriched_context = " ".join(enriched_context)
-
-        # Query ModelLake with enriched context
-        payload = {
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {
-                    "role": "user",
-                    "content": f"Using the following context: {enriched_context}, "
-                               f"please provide a detailed explanation on: {search_query}"
-                }
-            ],
-            "token_size": 3000
+            "vector_document": query
         }
 
-        chat_response = modellake.chat_complete(payload)
-        answer = chat_response.get("answer", "No answer received from ModelLake.")
-        return jsonify({"answer": answer})
+        search_response = vectorlake.search(search_request)
+        results = search_response.get("results", [])
+
+        # Process search results
+        context = ""
+        if results:
+            context = " ".join([r.get("vector_document", "") for r in results[:3]])
+
+        # Prepare ModelLake query
+        messages = [
+            {"role": "system", "content": "You are an emergency response assistant. Provide clear, concise, and actionable advice."},
+            {"role": "user", "content": f"Based on this context: {context}, provide emergency guidance for: {query}"}
+        ]
+
+        # Get response from ModelLake
+        chat_response = modellake.chat_complete({
+            "messages": messages,
+            "token_size": 2000
+        })
+
+        response = chat_response.get("answer", "I apologize, but I couldn't generate a proper response.")
+        return jsonify({"response": response})
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error: {str(e)}")
+        return jsonify({"response": "I'm having trouble processing your request. Please try again."}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
