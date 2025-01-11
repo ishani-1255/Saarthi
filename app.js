@@ -224,7 +224,7 @@ app.post(
   (req, res) => {
     const { username } = req.body;
     req.session.user = { username };
-    res.redirect("/user/home");
+    res.redirect("/user/index");
   }
 );
 
