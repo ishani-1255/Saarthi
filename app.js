@@ -25,7 +25,6 @@ const dbUrl = process.env.ATLASDB_URL;
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 app.locals.AppName = "Saarthi";
 
-
 // Configure storage for uploaded files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -87,7 +86,10 @@ app.use((req, res, next) => {
 // Connect to the database
 async function connectDB() {
   try {
-    await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(dbUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Database connection successful");
   } catch (error) {
     console.error("Database connection error:", error);
@@ -120,7 +122,9 @@ app.get("/home", isLoggedIn, (req, res) => res.render("home.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
-app.get("/testimonial", isLoggedIn, (req, res) => res.render("testimonial.ejs"));
+app.get("/testimonial", isLoggedIn, (req, res) =>
+  res.render("testimonial.ejs")
+);
 app.get("/courses", isLoggedIn, (req, res) => res.render("courses.ejs"));
 app.get("/form", isLoggedIn, (req, res) => res.render("form.ejs"));
 app.get("/search", isLoggedIn, (req, res) => res.render("search.ejs"));
@@ -131,11 +135,92 @@ app.get("/main", (req, res) => res.render("main.ejs"));
 app.get("/login", (req, res) => res.render("login.ejs"));
 app.get("/signup", (req, res) => res.render("signup.ejs"));
 app.get("/grading", isLoggedIn, (req, res) => res.render("grading.ejs"));
+app.get("/practice", isLoggedIn, (req, res) => {res.render("practice.ejs");
+});
+
+app.post("/practice", async (req, res) => {
+  try {
+    const { topic } = req.body;
+    const generatedQuiz = await quizGenerator(topic);
+    // Log the raw generated quiz
+
+    // Attempt to parse the generated quiz string into an object
+    const quiz = JSON.parse(generatedQuiz);
+    req.session.quiz = quiz; // Store the generated quiz in the session
+
+    res.render("quiz.ejs", { quiz }); // Render the quiz page with the generated quiz
+  } catch (err) {
+    console.error("Error generating quiz:", err);
+    res.status(500).send("Error generating quiz. Please try again.");
+  }
+});
+
+app.post("/submit-quiz", (req, res) => {
+  const userAnswers = req.body.userAnswers;
+  const quiz = req.session.quiz;
+
+  if (!quiz) {
+    console.error("Quiz not found in session");
+    return res.status(400).json({ error: "Quiz not found in session." });
+  }
+
+  let correctCount = 0;
+  const results = quiz.questions.map((question, index) => {
+    const correctAnswer = question.correctAnswer;
+    const userAnswer = userAnswers[`q${index}`];
+    const isCorrect = userAnswer === correctAnswer;
+    if (isCorrect) correctCount++;
+    return {
+      question: question.question,
+      userAnswer,
+      correctAnswer,
+      isCorrect,
+    };
+  });
+
+  res.json({
+    correctCount,
+    totalQuestions: quiz.questions.length,
+    results,
+  });
+});
+
+async function quizGenerator(topic) {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const prompt = `Based on the topic of ${topic} in the context of Engineering, create a multiple-choice quiz with 10 questions. Please format the response only in JSON (no extra things) with the following structure:
+{
+  "title": "MCQ Quiz on ${topic}",
+  "questions": [
+    {
+      "question": "Question text here",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswer": "Correct answer text here"
+    },
+    {
+      "question": "Next question text here",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswer": "Correct answer text here"
+    }
+    // Repeat for all 10 questions
+  ]
+}
+Make sure that:
+- Strictly Do not include any preamble.
+- Each question has 4 answer options.
+- Provide the correct answer for each question under "correctAnswer".
+`;
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  const text = response.text();
+
+  return text;
+}
+
 
 // Login route
 app.post(
   "/login",
-  passport.authenticate("local", { failureRedirect: "/login", failure : true }),
+  passport.authenticate("local", { failureRedirect: "/login", failure: true }),
   (req, res) => {
     const { username } = req.body;
     req.session.user = { username };
@@ -184,39 +269,44 @@ app.post(
 //   })
 // );
 
-app.post('/chat', async (req, res) => {
+app.post("/chat", async (req, res) => {
   const userMessage = req.body.user_input;
 
   if (!userMessage) {
-      return res.status(400).json({ error: 'user_input is required' });
+    return res.status(400).json({ error: "user_input is required" });
   }
 
   try {
-      // Send user input to Python chatbot
-      const pythonResponse = await axios.post('http://localhost:8000/chat', { user_input: userMessage });
-      const botReply = pythonResponse.data.bot_reply || 'No response from the chatbot.';
+    // Send user input to Python chatbot
+    const pythonResponse = await axios.post("http://localhost:8000/chat", {
+      user_input: userMessage,
+    });
+    const botReply =
+      pythonResponse.data.bot_reply || "No response from the chatbot.";
 
-      // Send bot's reply back to the frontend
-      res.json({ bot_reply: botReply });
+    // Send bot's reply back to the frontend
+    res.json({ bot_reply: botReply });
   } catch (error) {
-      console.error(error.message);
-      res.status(500).json({ error: 'Error communicating with the Python chatbot.' });
+    console.error(error.message);
+    res
+      .status(500)
+      .json({ error: "Error communicating with the Python chatbot." });
   }
 });
 
-
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  console.log('Uploaded file URL:', fileUrl); // Log downloadable link
+  const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${
+    req.file.filename
+  }`;
+  console.log("Uploaded file URL:", fileUrl); // Log downloadable link
 
   // Send response to the frontend
-  res.json({ message: 'File uploaded successfully', fileUrl });
+  res.json({ message: "File uploaded successfully", fileUrl });
 });
-
 
 // Form submission route
 app.post(
