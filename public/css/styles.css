@@ -2,7 +2,7 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #4f46e5;
     border-radius: 5px;
 }
 
@@ -12,7 +12,7 @@ input[type="text"], textarea, input[type="file"], button {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #4f46e5;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -21,12 +21,12 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #4f46e5; /* Same color for hover as requested */
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #4f46e5;
     margin: 0;
     padding: 0;
 }
@@ -63,7 +63,7 @@ input[type="checkbox"] {
     width: calc(100% - 22px); /* Adjust width to accommodate padding */
     padding: 12px;
     font-size: 18px; /* Increase font size */
-    border: 1px solid #ccc;
+    border: 1px solid #4f46e5;
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -75,8 +75,8 @@ input[type="checkbox"] {
 button {
     margin-top: 20px;
     padding: 12px 20px;
-    background-color: #add8e6; /* Light blue background color */
-    color: #000; /* Black text color */
+    background-color: #4f46e5; /* Light blue background color updated */
+    color: #fff; /* Ensure white text color */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -85,7 +85,7 @@ button {
 }
 
 button:hover {
-    background-color: #87ceeb; /* Darker shade of blue on hover */
+    background-color: #4f46e5; /* Same hover color */
 }
 
 #mandatorySubjects,
