@@ -1,2 +1,2 @@
-# Saarthi
-## Empowering Minds, Nurturing Health
+# Saarthi - ## Empowering Minds, Nurturing Health
+![logo](Saarthi_Logo.jpeg)
