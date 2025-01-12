@@ -286,6 +286,10 @@ a>img.img-fluid.w-100.h-100 {
 /*** Service ***/
 .service-item {
     background: rgba(154, 50, 138, 0.1);
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .service-item:hover {
