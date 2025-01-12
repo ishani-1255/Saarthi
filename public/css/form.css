@@ -28,7 +28,7 @@ body {
     max-width: 600px;
     width: 100%;
     position: relative;
-    top: 15rem;
+    top: 10rem;
     overflow: hidden;
 }
 
@@ -95,6 +95,24 @@ h1 {
     display: none;
 }
 
+/* Image preview styles */
+.image-preview-container {
+    margin: 20px 0;
+    display: none;
+    justify-content: center;
+    background: rgba(227, 216, 241, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(227, 216, 241, 0.2);
+}
+
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
 .loading {
     display: none;
     align-items: center;
@@ -142,7 +160,6 @@ h1 {
     margin: 0;
 }
 
-/* Add subtle animation for result appearance */
 @keyframes fadeIn {
     from {
         opacity: 0;
