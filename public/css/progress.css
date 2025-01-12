@@ -1,0 +1,153 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #b8a0d3, #d8c6e3); /* Light purple gradient */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .container:hover {
+    transform: scale(1.05);
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+    animation: slideIn 1s ease-out;
+  }
+  
+  h1 {
+    font-size: 36px;
+    color: #9b4dca; /* Soft purple shade */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  p {
+    font-size: 18px;
+    color: #fff;
+  }
+  
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 16px;
+    color: #4f4f4f; /* Darker text for better readability */
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input, textarea, select {
+    padding: 12px;
+    border: 2px solid #d1c4e9; /* Light purple border */
+    border-radius: 10px;
+    font-size: 16px;
+    width: 100%;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: #9b4dca; /* Purple border on focus */
+    background-color: #f1e6fb; /* Soft lavender background on focus */
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .form-actions {
+    text-align: center;
+  }
+  
+  button {
+    background: linear-gradient(135deg, #9b4dca, #b8a0d3); /* Light purple gradient */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #b8a0d3, #9b4dca); /* Inverted gradient on hover */
+    transform: translateY(-4px);
+  }
+  
+  button:active {
+    transform: translateY(2px);
+  }
+  
+  .thank-you-message {
+    text-align: center;
+    font-size: 24px;
+    color: #4CAF50;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .message-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    animation: slideIn 1s ease-out;
+  }
+  
+  .message-container h2 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .message-container p {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
