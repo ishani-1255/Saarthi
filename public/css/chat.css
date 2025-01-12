@@ -550,3 +550,11 @@ input:focus {
         border-radius: 0;
     }
 }
+.chat-messages {
+    background-image: url('../img/chatbot.png');
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    opacity: 0.15;  /* Reduces opacity of the entire container */
+}
+
