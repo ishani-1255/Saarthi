@@ -62,3 +62,21 @@ The inspiration behind this project stems from the challenges faced by underserv
    Since **Plotch.ai** primarily supports Python rather than JavaScript, we faced a major challenge in bridging the gap between the backend services and frontend web application. To overcome this, we first developed a **Flask API** to handle Plotch.ai functionalities and then connected it to our **Node.js server**, ensuring smooth communication with the web page.
 
 Despite these technical obstacles, we successfully delivered a fully functional, innovative learning platform by leveraging creative solutions, robust testing, and teamwork.
+
+
+## **Revenue Model**
+
+### **Sustainable Revenue Through Ethical Advertising**  
+We prioritize **education accessibility** over profit. Our **advertising-based revenue model** ensures that the platform remains free or highly affordable for students. By showcasing **non-intrusive and educationally relevant ads**, we generate revenue to support platform operations and development. These advertisements are carefully curated to enhance the learning experience without disrupting it, ensuring the platform remains **cost-effective** and **impact-driven**.
+
+### **Collaborations with Government and NGOs**  
+Our mission is to make education accessible to every student. By partnering with **governments** and **NGOs**, we secure funding to provide free or subsidized access to underprivileged students. These collaborations allow us to extend the platform’s reach to rural and underserved communities, ensuring that financial barriers don’t hinder access to quality education.
+
+### **Low-Cost Micro-Certifications**  
+We offer **optional micro-certifications** for students looking to validate their skills and enhance employability. These certifications are priced minimally to cover administrative costs, ensuring affordability while maintaining high value for learners.
+
+### **Affiliate Partnerships for Educational Tools**  
+Through **affiliate partnerships**, we recommend affordable educational tools, books, and resources. This generates small commissions that contribute to platform sustainability without increasing costs for users. These partnerships align with our vision of providing high-quality, accessible learning experiences.
+
+### **Voluntary Donations for Community Support**  
+We encourage **voluntary donations** from alumni, individuals, and organizations who wish to support our cause. These contributions help keep the platform free or affordable for all users, ensuring no student is left behind due to financial constraints.
