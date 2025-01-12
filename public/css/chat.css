@@ -1,31 +1,27 @@
 :root {
-    --primary-color: #4f46e5;
-    --primary-light: #eef2ff;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
+    --primary-color: #9A328A;
+    --primary-light: #E3D8F1;
+    --text-primary: #30304A;
+    --text-secondary: #6A1F5F;
     --bg-color: #ffffff;
-    --message-bot: #f3f4f6;
-    --message-user: #4f46e5;
+    --message-bot: #E3D8F1;
+    --message-user: #9A328A;
     --nav-height: 4rem;
 }
-
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    /* background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%); */
-    background-color: #5e58cf;
+    background-color: #6A1F5F;
     min-height: 100vh;
     color: var(--text-primary);
 }
 
-/* Navbar Styles */
 .navbar {
     background: var(--bg-color);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -82,7 +78,7 @@ body {
 .nav-links a.active {
     color: var(--primary-color);
 }
-/* Waiting animation */
+
 .typing-indicator {
     display: none;
     align-items: center;
@@ -120,7 +116,6 @@ body {
     }
 }
 
-/* User and Chatbot Message Colors */
 .user .message-content {
     background: var(--message-user);
     color: white;
@@ -133,13 +128,11 @@ body {
     border-top-left-radius: 0;
 }
 
-/* Improved Chatbot Response Layout */
 .bot .message-content {
     padding: 1rem;
     line-height: 1.5;
 }
 
-/* Toggle Label */
 .toggle-label {
     display: flex;
     align-items: center;
@@ -148,7 +141,6 @@ body {
     margin-top: 10px;
 }
 
-/* Toggle Switch */
 .toggle-label input[type="checkbox"] {
     display: none;
 }
@@ -175,17 +167,14 @@ body {
     transition: transform 0.3s;
 }
 
-/* Checked State */
 .toggle-label input[type="checkbox"]:checked + .toggle-slider {
-    background: #4caf50;
+    background: #9A328A;
 }
 
 .toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
     transform: translateX(20px);
 }
 
-
-/* Dropdown Styles */
 .dropdown {
     position: relative;
 }
@@ -231,7 +220,7 @@ body {
 }
 
 .dropdown-menu a:hover {
-    background-color: #f3f4f6;
+    background-color: var(--primary-light);
 }
 
 .logout-btn {
@@ -248,10 +237,9 @@ body {
 }
 
 .logout-btn:hover {
-    background: #4338ca;
+    background: #6A1F5F;
 }
 
-/* Main Content */
 .main-content {
     padding: 2rem;
     display: flex;
@@ -260,7 +248,6 @@ body {
     min-height: calc(100vh - var(--nav-height));
 }
 
-/* Chat Container Styles */
 .chat-container {
     width: 100%;
     max-width: 800px;
@@ -272,7 +259,6 @@ body {
     flex-direction: column;
 }
 
-/* Rest of the existing chat styles remain the same */
 .chat-header {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #e5e7eb;
@@ -415,7 +401,7 @@ input:focus {
 }
 
 .send-button:hover {
-    background: #4338ca;
+    background: #6A1F5F;
 }
 
 .input-features {
@@ -449,7 +435,6 @@ input:focus {
     }
 }
 
-/* Custom scrollbar */
 .chat-messages::-webkit-scrollbar {
     width: 6px;
 }
@@ -459,15 +444,14 @@ input:focus {
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #E3D8F1;
     border-radius: 3px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #9A328A;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .nav-toggle-label {
         display: block;
