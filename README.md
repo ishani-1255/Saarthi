@@ -26,8 +26,10 @@ The inspiration behind this project stems from the challenges faced by underserv
 2. **Gamified Learning Activities**  
    Interactive learning tools like quizzes and flashcards are generated based on student-selected topics, promoting curiosity and engagement in a fun, competitive environment.
 
-3. **Comprehensive Educational Resources**  
-   A wide range of learning materials across subjects enables underserved students to strengthen their knowledge and critical thinking skills.
+3. **Comprehensive Educational Resources or Roadmap Generator for Tailored Learning**  
+
+Our platform features an intelligent creates personalized learning paths based on the selected class and topic. Students can explore a structured roadmap that outlines the key topics and lessons to focus on, ensuring they stay aligned with their learning goals. While progress tracking is not yet available, this feature provides clear guidance to help students stay on track with their educational journey.
+A wide range of learning materials across subjects enables underserved students to strengthen their knowledge and critical thinking skills.
 
 4. **Emergency Medical Guidance(SOS)**  
    Step-by-step instructions for handling emergency conditions like heart attacks, snake bites, burns, or low blood pressure, curated by qualified medical professionals.
