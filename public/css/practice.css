@@ -1,8 +1,8 @@
 /********** Template CSS **********/
 :root {
-  --primary: #4f46e5;
-  --light: #4f46e5;
-  --dark: #8B7355;
+  --primary: #9A328A;
+  --light: #E3D8F1;
+  --dark: #30304A;
 }
 
 .fw-medium {
@@ -45,8 +45,8 @@
 }
 
 .btn:hover {
-  background-color: #E6AC00; /* Slightly darker shade for hover state */
-  border-color: #E6AC00;
+  background-color: #0088A3;
+  border-color: #0088A3;
 }
 
 .btn.btn-primary,
@@ -92,20 +92,17 @@
   align-self: center;
 }
 
-/* img{
-  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(30deg) ;
-} */
 div.owl-carousel-item.position-relative>img{
-  filter: sepia(100%) saturate(300%) hue-rotate(30deg) brightness(100%) !important;
+  filter: sepia(100%) saturate(300%) hue-rotate(280deg) brightness(100%) !important;
 }
 div>img.img-fluid.position-absolute.w-100.h-100{
-  filter: sepia(100%) saturate(300%) hue-rotate(30deg) brightness(70%) !important;
+  filter: sepia(100%) saturate(300%) hue-rotate(280deg) brightness(70%) !important;
 }
 a>img.img-fluid{
-  filter: sepia(100%) saturate(300%) hue-rotate(33deg) brightness(110%) !important;
+  filter: sepia(100%) saturate(300%) hue-rotate(280deg) brightness(110%) !important;
 }
 a>img.img-fluid.w-100.h-100{
-  filter: sepia(150%) saturate(400%) hue-rotate(33deg) brightness(80%) !important;
+  filter: sepia(150%) saturate(400%) hue-rotate(280deg) brightness(80%) !important;
 }
 
 
@@ -224,14 +221,14 @@ a>img.img-fluid.w-100.h-100{
 
 .page-header {
   background: url(../img/carousel-1.jpg);
-  filter: sepia(200%) saturate(250%) hue-rotate(30deg) brightness(60%) !important;
+  filter: sepia(200%) saturate(250%) hue-rotate(280deg) brightness(60%) !important;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .page-header-inner {
-  background: rgba(15, 23, 43, .7);
+  background: rgba(48, 48, 74, .7);
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
@@ -281,7 +278,7 @@ a>img.img-fluid.w-100.h-100{
 
 /*** Service ***/
 .service-item {
-  background: rgba(255, 190, 0, 0.1);
+  background: rgba(154, 50, 138, 0.1);
 }
 
 .service-item:hover {
@@ -301,7 +298,7 @@ a>img.img-fluid.w-100.h-100{
 .category img,
 .course-item img,
 .owl-carousel-item img {
-  filter: sepia(20%) hue-rotate(340deg) saturate(200%);
+  filter: sepia(20%) hue-rotate(280deg) saturate(200%);
 }
 
 .category a:hover img,
@@ -322,7 +319,7 @@ a>img.img-fluid.w-100.h-100{
 .btn.btn-primary,
 .nav-item:hover,
 .service-item:hover {
-  box-shadow: 0 0 15px rgba(255, 190, 0, 0.5);
+  box-shadow: 0 0 15px rgba(154, 50, 138, 0.5);
   transition: box-shadow 0.3s ease;
 }
 
@@ -367,11 +364,6 @@ a>img.img-fluid.w-100.h-100{
       width: 300px;
   }
 }
-
-.owl-carousel-item .position-absolute {
-  /* background: rgba(255, 190, 0, 0.5) !important; */
-}
-
 
 .testimonial-carousel .owl-item .testimonial-text,
 .testimonial-carousel .owl-item.center .testimonial-text * {
@@ -438,8 +430,8 @@ a>img.img-fluid.w-100.h-100{
 
 .footer .btn-social:hover,
 .navbar .btn:hover {
-  background-color: #E6AC00;
-  border-color: #E6AC00;
+  background-color: #0088A3;
+  border-color: #0088A3;
 }
 
 /* Additional global color application */
@@ -447,9 +439,9 @@ a>img.img-fluid.w-100.h-100{
   color: var(--primary) !important;
 }
 
-/* Optional: Add golden tint to sections */
+/* Optional: Add purple tint to sections */
 .container-xxl {
-  background-color: rgba(255, 190, 0, 0.05);
+  background-color: rgba(154, 50, 138, 0.05);
 }
 
 .footer .btn.btn-social:hover {
