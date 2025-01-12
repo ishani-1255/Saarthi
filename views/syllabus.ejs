@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syllabus Generator</title>
+    <title>Roadmap Generator</title>
      <!-- Favicon -->
      <link href="/img/favicon.ico" rel="icon">
 
@@ -57,7 +57,7 @@
         </div>
     </nav>
     <div class="container">
-        <h1>Syllabus Generator</h1>
+        <h1>Roadmap Generator</h1>
         <form id="syllabusForm" method="post" action="/syllabus">
             <label for="class">Class:</label>
             <select id="class" name="std" required>
@@ -75,10 +75,10 @@
             </select><br><br>
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" required><br><br>
-            <button type="submit">Generate Syllabus</button>
+            <button type="submit">Generate Roadmap</button>
         </form>
         <div class="result">
-            <h2>Generated Syllabus</h2>
+            <h2>Generated Roadmap</h2>
             <textarea id="syllabusResult" rows="10" readonly class="syllabus"></textarea>
         </div>
     </div>

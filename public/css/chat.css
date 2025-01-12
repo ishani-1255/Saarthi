@@ -627,31 +627,55 @@ input:focus {
 
 
   /* Image Carousel Styles */
-  .image-carousel {
-    width: 100%;
-    overflow: hidden;
-    margin-top: 3rem;
-}
+        .image-carousel {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
 
-.carousel-track {
-    display: flex;
-    animation: slideImages 10s linear infinite;
-}
+        .carousel-track {
+            display: flex;
+            animation: slideImages 10s linear infinite;
+        }
 
-.carousel-image {
-    width: 100%;
-    max-width: 300px;
-    margin-right: 1rem;
-    border-radius: 16px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
+        .carousel-image {
+            width: 100%;
+            max-width: 300px;
+            margin-right: 1rem;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-@keyframes slideImages {
-    0% {
-        transform: translateX(0);
-    }
+        @keyframes slideImages {
+            0% {
+                transform: translateX(0);
+            }
 
-    60% {
-        transform: translateX(-25%);
-    }
-}
+            60% {
+                transform: translateX(-25%);
+            }
+        }
+
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+          }
+          
+          .spinner-icon {
+            animation: spin 1s linear infinite;
+          }
+          
+          @keyframes spin {
+            0% {
+              stroke-dashoffset: 60;
+              transform: rotate(0deg);
+            }
+            100% {
+              stroke-dashoffset: 0;
+              transform: rotate(360deg);
+            }
+          }
+          

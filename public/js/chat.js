@@ -1,6 +1,9 @@
+
+
 const chatForm = document.getElementById('chat-form');
 const userInput = document.getElementById('user-input');
 const messages = document.getElementById('messages');
+const loadingSpinner = document.getElementById('loading-spinner');
 
 chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -9,6 +12,9 @@ chatForm.addEventListener('submit', async (e) => {
 
     // Display user's message
     displayMessage(userMessage, 'user');
+
+    // Show loading spinner
+    loadingSpinner.style.display = 'flex';
 
     try {
         // Send user message to Node.js backend
@@ -20,10 +26,17 @@ chatForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
+        // Hide loading spinner
+        loadingSpinner.style.display = 'none';
+
         // Display bot's reply
         displayMessage(data.bot_reply, 'bot');
     } catch (error) {
         console.error(error);
+
+        // Hide loading spinner
+        loadingSpinner.style.display = 'none';
+
         displayMessage('Error communicating with the chatbot.', 'bot');
     }
 

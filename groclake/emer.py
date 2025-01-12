@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import requests
 from groclake.vectorlake import VectorLake
-from groclake.datalake import DataLake
 from groclake.modellake import ModelLake
 
 app = Flask(__name__)
@@ -14,6 +14,9 @@ GROCLAKE_ACCOUNT_ID = os.environ.get('GROCLAKE_ACCOUNT_ID')
 
 os.environ['GROCLAKE_API_KEY'] = '43ec517d68b6edd3015b3edc9a11367b'
 os.environ['GROCLAKE_ACCOUNT_ID'] = '7376846f01e0b6e5f1568fef7b48a148'
+
+# Predefined document URL
+DOCUMENT_URL = "https://drive.google.com/uc?export=download&id=1yFjAXbGYHju0WaYXygKaqcKwK0nEpfSe"
 
 # Initialize lakes
 vectorlake = VectorLake()
@@ -28,32 +31,41 @@ def chat():
         if not query:
             return jsonify({"error": "No query provided"}), 400
 
-        # Generate vector for search
-        vector_data = vectorlake.generate(query)
-        search_vector = vector_data.get("vector")
+        # Fetch document content from the predefined URL
+        try:
+            response = requests.get(DOCUMENT_URL)
+            response.raise_for_status()
+            document_content = response.text
+        except Exception as e:
+            return jsonify({"error": f"Failed to fetch document content: {str(e)}"}), 400
 
-        if not search_vector:
-            return jsonify({"response": "I'm sorry, I couldn't process your query. Please try again."}), 200
+        # Generate vectors for the document and the query
+        document_vector_data = vectorlake.generate(document_content)
+        document_vector = document_vector_data.get("vector")
 
-        # Prepare and perform vector search
+        query_vector_data = vectorlake.generate(query)
+        query_vector = query_vector_data.get("vector")
+
+        if not document_vector or not query_vector:
+            return jsonify({"response": "I'm sorry, I couldn't process your query or the document."}), 200
+
+        # Perform vector search based on the query and document
         search_request = {
-            "vector": search_vector,
+            "vector": query_vector,
             "vector_type": "text",
-            "vector_document": query
+            "vector_document": document_content
         }
 
         search_response = vectorlake.search(search_request)
         results = search_response.get("results", [])
 
-        # Process search results
-        context = ""
-        if results:
-            context = " ".join([r.get("vector_document", "") for r in results[:3]])
+        # Create enriched context from the top search results
+        enriched_context = " ".join([r.get("vector_document", "") for r in results[:3]])
 
-        # Prepare ModelLake query
+        # Prepare ModelLake query using enriched context
         messages = [
             {"role": "system", "content": "You are an emergency response assistant. Provide clear, concise, and actionable advice."},
-            {"role": "user", "content": f"Based on this context: {context}, provide emergency guidance for: {query}"}
+            {"role": "user", "content": f"Based on this context: {enriched_context}, provide emergency guidance for: {query}"}
         ]
 
         # Get response from ModelLake
