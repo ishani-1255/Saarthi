@@ -56,31 +56,31 @@
     </nav>
 
     <div class="container">
-        <div>
-            <div>
-                <h1>Image-Based Problem Solver</h1>
-        <div class="upload-container">
-            <div class="image-preview-container">
-                <img id="imagePreview" class="image-preview">
+        <div class="content-wrapper">
+            <h1>Image-Based Problem Solver</h1>
+            
+            <div class="upload-section">
+                <div class="upload-container">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" class="image-preview">
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*">
+                    <label for="imageInput" class="upload-btn"><i class="fas fa-upload"></i> Choose Image</label>
+                    <button id="uploadBtn" class="upload-btn"><i class="fas fa-check"></i> Upload</button>
+                    <div id="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
             </div>
-            <input type="file" id="imageInput" accept="image/*">
-            <label for="imageInput" class="upload-btn"><i class="fas fa-upload"></i> Choose Image</label>
-            <button id="uploadBtn" class="upload-btn"><i class="fas fa-check"></i> Upload</button>
-        </div>
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Loading...</p>
-        </div>
-            </div>
-            <div>
+            
+            <div class="result-section">
                 <div id="result"></div>
             </div>
         </div>
-        
     </div>
 
     <script>
-        // Image preview functionality
         document.getElementById('imageInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {

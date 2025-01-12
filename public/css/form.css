@@ -25,7 +25,7 @@ body {
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    max-width: 1000px;
     width: 100%;
     position: relative;
     top: 10rem;
@@ -43,6 +43,24 @@ body {
     pointer-events: none;
 }
 
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    min-height: 400px;
+}
+
+.upload-section {
+    padding: 20px;
+    border-right: 1px solid rgba(227, 216, 241, 0.2);
+}
+
+.result-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 h1 {
     font-family: 'Orbitron', sans-serif;
     text-align: center;
@@ -52,6 +70,7 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(227, 216, 241, 0.3);
+    grid-column: 1 / -1;
 }
 
 .upload-container {
@@ -59,7 +78,6 @@ h1 {
     flex-direction: column;
     gap: 20px;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 .upload-btn {
@@ -95,7 +113,6 @@ h1 {
     display: none;
 }
 
-/* Image preview styles */
 .image-preview-container {
     margin: 20px 0;
     display: none;
@@ -104,6 +121,7 @@ h1 {
     padding: 15px;
     border-radius: 8px;
     border: 1px solid rgba(227, 216, 241, 0.2);
+    width: 100%;
 }
 
 .image-preview {
@@ -117,8 +135,8 @@ h1 {
     display: none;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
     gap: 15px;
+    margin: 20px 0;
 }
 
 .spinner {
@@ -147,13 +165,14 @@ h1 {
     padding: 20px;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
     display: none;
     color: var(--text-color);
     border: 1px solid rgba(227, 216, 241, 0.2);
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.1rem;
     line-height: 1.6;
+    height: 100%;
+    overflow-y: auto;
 }
 
 #result p {
@@ -174,4 +193,16 @@ h1 {
 #result.show {
     display: block;
     animation: fadeIn 0.3s ease forwards;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .upload-section {
+        border-right: none;
+        border-bottom: 1px solid rgba(227, 216, 241, 0.2);
+    }
 }
