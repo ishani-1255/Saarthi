@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/practice.css"> 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -30,10 +31,145 @@
      <link href="/css/style.css" rel="stylesheet">
    
   <title>Quiz Topic Selection</title>
+=======
+  <title>Quiz Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/lucide-icons@0.0.129/dist/lucide.min.css" rel="stylesheet">
+  <link href="/css/practice.css" rel="stylesheet">
+  <style>
+    /* Custom Styles */
+    body {
+      background-color: #cfbfe6; /* Light purple background */
+      margin: 0;
+      padding: 0;
+      position: relative;
+      bottom: 70px;
+      overflow: hidden;
+      scale: 1.3;
+    }
+
+    .glowing-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(3px);
+    }
+
+    /* Gradient and background animation */
+    .animated-background {
+      position: absolute;
+      inset: 0;
+      opacity: 0.2;
+      background: 
+        linear-gradient(45deg, transparent 45%, rgba(147, 51, 234, 0.5) 45%, rgba(147, 51, 234, 0.5) 55%, transparent 55%),
+        linear-gradient(-45deg, transparent 45%, rgba(236, 72, 153, 0.5) 45%, rgba(236, 72, 153, 0.5) 55%, transparent 55%);
+      background-size: 200px 200px;
+      animation: moveBackground 2s linear infinite;
+      z-index: -1; /* Ensures background stays behind the content */
+      background-image: url('/img/Qu.jpeg');
+
+
+    }
+
+    @keyframes moveBackground {
+      0% { transform: translateX(0); }
+      100% { transform: translateY(-150px); }
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      position: relative;
+      padding: 20px; /* Added padding to ensure content stays inside */
+      z-index: 1;
+    }
+
+    .card {
+      background-color: #a5879f;
+      border-radius: 8px;
+      padding: 20px; /* Adjusted padding to ensure space inside */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 380px; /* Adjusted max-width */
+      box-sizing: border-box;
+    }
+
+    .button {
+      background-color: #9F7AEA;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center text and icon */
+      gap: 8px; /* Add space between the text and icon */
+      width: 100%; /* Full width of the button */
+      text-align: center;
+    }
+
+    .button:hover {
+      background-color: #805AD5;
+    }
+
+    .input {
+      background-color: #4A5568;
+      color: white;
+      padding: 10px 16px; /* Adjusted padding */
+      border-radius: 8px;
+      border: 1px solid #4A5568;
+      width: 90%;
+      margin-bottom: 16px; /* Space between input and button */
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      background: linear-gradient(to right, #6134bb, #F472B6);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      font-size: 1.5rem;
+      color: #081d42;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: rgba(96, 69, 107, 0.8); /* Transparent background */
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10; /* Ensure the navbar stays above other content */
+    }
+
+    .navbar a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+  </style>
+>>>>>>> 3faf32933cf78a909cf41c1663126a7ec5664511
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+  <!-- <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="/index" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i><%= AppName%></h2>
     </a>
@@ -60,26 +196,50 @@
         
         <a href="/logout" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Log Out<i class="fa fa-arrow-right ms-3"></i></a>
     </div>
-</nav>
+</nav> -->
+  <div class="animated-background"></div> <!-- Background that moves continuously -->
 
-<div class="container mt-5">
-  <h1 class="text-center mb-4">Select Quiz Topic</h1>
-  
-  <div class="card">
-    <div class="card-body">
-      <form id="topicForm" action="/practice" method="POST">
-        <div class="mb-3">
-          <label for="topic" class="form-label">Enter the topic for your quiz:</label>
-          <input type="text" class="form-control" id="topic" name="topic" placeholder="e.g., Linked Lists" required>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-outline-secondary">Generate Quiz</button>
-        </div>
-      </form>
+  <div class="content-wrapper">
+    <h1 class="title">
+      Quiz Generator
+    </h1>
+    <p class="description">
+      Create your own custom quiz adventure
+    </p>
+
+    <!-- Card Component -->
+     <form id="topicForm" action="/practice" method="POST">
+    <div class="card">
+      <input
+        id="quizTopic"
+        placeholder="Enter topic for your quiz..."
+        class="input"
+        name="topic"
+      />
+      <button
+        id="submitButton"
+        class="button"
+      >
+        Generate Quiz
+        <i class="lucide-arrow-right" style="width: 24px; height: 24px;"></i>
+      </button>
     </div>
-  </div>
-</div>
+      </form>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Decorative glowing orbs -->
+    <div class="glowing-orb bg-purple-900/20 w-96 h-96 -ml-48 -mb-48" style="bottom: 0; left: 0;"></div>
+    <div class="glowing-orb bg-pink-900/20 w-96 h-96 -mr-48 -mt-48" style="top: 0; right: 0;"></div>
+  </div>
+
+  <script>
+    // Handle button click
+    const submitButton = document.getElementById("submitButton");
+    const quizTopicInput = document.getElementById("quizTopic");
+
+    submitButton.addEventListener("click", () => {
+      const customTopic = quizTopicInput.value;
+      console.log('Custom topic:', customTopic);
+    });
+  </script>
 </body>
 </html>

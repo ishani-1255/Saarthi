@@ -558,3 +558,31 @@ input:focus {
     opacity: 0.15;  /* Reduces opacity of the entire container */
 }
 
+.image-carousel {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 3rem;
+}
+
+.carousel-track {
+    display: flex;
+    animation: slideImages 10s linear infinite;
+}
+
+.carousel-image {
+    width: 100%;
+    max-width: 300px;
+    margin-right: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideImages {
+    0% {
+        transform: translateX(0);
+    }
+
+    60% {
+        transform: translateX(-25%);
+    }
+}
