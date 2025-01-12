@@ -44,7 +44,7 @@ try:
     payload_push = {
         "datalake_id": datalake_id,
         "document_type": "url",
-        "document_data": "https://drive.google.com/uc?export=download&id=1SPVyliHvBQxYoT4mJZH4sSmd1MpYfqPs"   
+        "document_data": "https://drive.google.com/uc?export=download&id=1yFjAXbGYHju0WaYXygKaqcKwK0nEpfSe"   
     }
 
     # Push the document
@@ -152,7 +152,7 @@ Use the search results to enrich a context and query ModelLake for additional in
 
 try:
     # Generate vector for the search query
-    search_query = "what is class 5th syllabus ?"
+    search_query = "What to do in case of bitten by snake ?"
     vector_search_data = vectorlake.generate(search_query)
     search_vector = vector_search_data.get("vector")
 
