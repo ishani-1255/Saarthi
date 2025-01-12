@@ -11,6 +11,7 @@
 #### **Empowering Every Curious Mind: Bridging Learning Gaps with Innovation**
 In today’s education landscape, many students face significant challenges due to a **lack of quality teaching**, **limited resources**, or **inaccessible guidance**. **Saarthi** aims to bridge this gap by providing a comprehensive, **AI-driven web application** designed **to foster curiosity and support students eager to learn** despite their circumstances.
 Our platform acts as a **learning backbone** for underserved and underprivileged students, enabling them to resolve their doubts through both text-based and image-based queries. Whether students scan a question or type their query, **Saarthi** delivers clear, accurate solutions, fostering a deeper understanding and encouraging continuous learning.
+
 ------
 
 ### **Inspiration**
@@ -26,7 +27,11 @@ The inspiration behind this project stems from the challenges faced by underserv
 2. **Gamified Learning Activities**  
    Interactive learning tools like quizzes and flashcards are generated based on student-selected topics, promoting curiosity and engagement in a fun, competitive environment.
 
-3. **Comprehensive Educational Resources**  
+3. **Comprehensive Educational Resources or Roadmap Generator for Tailored Learning**  
+
+   Our platform features an intelligent creates personalized learning paths based on the selected class and topic. Students can explore a structured roadmap that outlines the key 
+   topics and lessons to focus on, ensuring they stay aligned with their learning goals. While progress tracking is not yet available, this feature provides clear guidance to help 
+   students stay on track with their educational journey.
    A wide range of learning materials across subjects enables underserved students to strengthen their knowledge and critical thinking skills.
 
 4. **Emergency Medical Guidance(SOS)**  
