@@ -123,6 +123,7 @@ app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/emergency", isLoggedIn, (req, res) => res.render("emergency.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
 app.get("/translate", isLoggedIn, (req, res) => res.render("translate.ejs"));
+app.get("/progress", isLoggedIn, (req, res) => res.render("progress.ejs"));
 app.get("/landingPage", (req, res) => res.render("landing_page.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
 app.get("/testimonial", isLoggedIn, (req, res) =>
