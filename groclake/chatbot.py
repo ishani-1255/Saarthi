@@ -50,6 +50,41 @@ def chat():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# API route for additional chatbot interaction
+@app.route('/ask', methods=['POST'])
+def ask():
+    try:
+        global conversation_history
+        data = request.json  # Get JSON payload from the client
+
+        user_input = data.get('user_input')
+        if not user_input:
+            return jsonify({'error': 'user_input is required'}), 400
+
+        # Append user's input to conversation history
+        conversation_history.append({"role": "user", "content": user_input})
+
+        # Create the payload
+        payload = {
+            "messages": conversation_history,
+            "token_size": 300  # Max tokens for response
+        }
+
+        # Pass the payload to chat_complete
+        response = model_lake.chat_complete(payload=payload)
+
+        # Extract the assistant's reply
+        bot_reply = response.get('answer', 'Sorry, I couldn\'t process that.')
+
+        # Append the bot's reply to conversation history
+        conversation_history.append({"role": "assistant", "content": bot_reply})
+
+        # Return the bot's reply
+        return jsonify({'bot_reply': bot_reply})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # API route to reset the conversation
 @app.route('/reset', methods=['POST'])
 def reset_conversation():

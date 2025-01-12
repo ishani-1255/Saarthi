@@ -157,6 +157,29 @@ app.post("/practice", async (req, res) => {
   }
 });
 
+app.post(
+  "/ask",
+  isLoggedIn,
+  asyncHandler(async (req, res) => {
+      const userInput = req.body.question; // Expecting 'question' from the frontend
+      try {
+          // Send user input to Python chatbot
+          const pythonResponse = await axios.post("http://localhost:8000/chat", {
+              user_input: userInput,
+          });
+
+          const botReply =
+              pythonResponse.data.bot_reply || "No response from the chatbot.";
+
+          // Send bot's reply back to the frontend
+          res.json({ bot_reply: botReply });
+      } catch (error) {
+          console.error("Error communicating with Python chatbot:", error.message);
+          res.status(500).json({ error: "Failed to communicate with the chatbot." });
+      }
+  })
+);
+
 app.post("/submit-quiz", (req, res) => {
   const userAnswers = req.body.userAnswers;
   const quiz = req.session.quiz;
@@ -299,25 +322,29 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 // Form submission route
-app.post(
-  "/form",
-  isLoggedIn,
-  upload.single("image"),
-  asyncHandler(async (req, res) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const imageParts = [
-      {
-        inlineData: {
-          data: fs.readFileSync(req.file.path).toString("base64"),
-          mimeType: "image/jpeg",
-        },
-      },
-    ];
-    const result = await model.generateContent(imageParts);
+app.post('/form', isLoggedIn, upload.single('image'), async (req, res) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const prompt = '';
+    const imageParts = [{
+      inlineData: {
+        data: fs.readFileSync(req.file.path).toString('base64'),
+        mimeType: 'image/jpeg'
+      }
+    }];
+
+    console.log(req.file.path);
+
+    const result = await model.generateContent([prompt, ...imageParts]);
     const response = await result.response;
-    res.json({ result: response.text() });
-  })
-);
+    const text = response.text();
+
+    res.json({ result: text }); // Sends JSON response
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' }); // Error response
+  }
+});
 
 // Logout route
 app.get("/logout", (req, res, next) => {
@@ -345,3 +372,35 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+function fileToGenerativePart(path, mimeType) {
+  return {
+    inlineData: {
+      data: Buffer.from(fs.readFileSync(path)).toString("base64"),
+      mimeType
+    },
+  };
+}
+
+
+async function problemSolving() {
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const prompt = "";
+  const imageParts = [
+    fileToGenerativePart("prob.jpg", "image/jpeg"),
+  ];
+  const result = await model.generateContent([prompt, ...imageParts]);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  return text;
+}
+
+
+async function textQuery(query) {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const result = await model.generateContent(query);
+  const response = await result.response;
+  const text = response.text();
+  return text;
+}
