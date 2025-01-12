@@ -1,153 +1,141 @@
 /* Global Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #b8a0d3, #d8c6e3); /* Light purple gradient */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ff7a8c, #6c63ff); /* Beautiful gradient background */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: #333;
+    color: white;
+    overflow: hidden;
   }
   
   .container {
-    width: 90%;
-    max-width: 600px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .container:hover {
-    transform: scale(1.05);
+    width: 85%;
+    max-width: 1300px;
+    background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent background */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Blurry background effect */
   }
   
   header {
     text-align: center;
-    margin-bottom: 20px;
-    animation: slideIn 1s ease-out;
+    margin-bottom: 40px;
   }
   
   h1 {
-    font-size: 36px;
-    color: #9b4dca; /* Soft purple shade */
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 3rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
   }
   
   p {
+    color: #ddd;
     font-size: 18px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  
+  .progress-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .progress-card {
+    background-color: #1e2a47; /* Dark background for each card */
+    padding: 30px;
+    width: 48%;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s forwards;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 25px;
     color: #fff;
   }
   
-  .feedback-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    font-size: 16px;
-    color: #4f4f4f; /* Darker text for better readability */
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input, textarea, select {
-    padding: 12px;
-    border: 2px solid #d1c4e9; /* Light purple border */
-    border-radius: 10px;
-    font-size: 16px;
+  canvas {
     width: 100%;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    height: 300px;
+    border-radius: 10px;
   }
   
-  input:focus, textarea:focus, select:focus {
-    border-color: #9b4dca; /* Purple border on focus */
-    background-color: #f1e6fb; /* Soft lavender background on focus */
-  }
-  
-  textarea {
-    resize: vertical;
-  }
-  
-  .form-actions {
+  .actions {
     text-align: center;
   }
   
   button {
-    background: linear-gradient(135deg, #9b4dca, #b8a0d3); /* Light purple gradient */
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 30px;
+    background: linear-gradient(135deg, #6c63ff, #ff7a8c); /* Gradient background for buttons */
+    color: white;
+    padding: 14px 28px;
     font-size: 18px;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   }
   
   button:hover {
-    background: linear-gradient(135deg, #b8a0d3, #9b4dca); /* Inverted gradient on hover */
-    transform: translateY(-4px);
+    background: linear-gradient(135deg, #ff7a8c, #6c63ff);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
   }
   
   button:active {
     transform: translateY(2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   }
   
-  .thank-you-message {
-    text-align: center;
-    font-size: 24px;
-    color: #4CAF50;
-    animation: fadeIn 1s ease-out;
-  }
-  
-  .message-container {
-    background: #fff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
-    animation: slideIn 1s ease-out;
-  }
-  
-  .message-container h2 {
-    font-size: 30px;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .message-container p {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  @keyframes fadeIn {
-    from {
+  /* Keyframe Animation for Fade-in Effect */
+  @keyframes fadeInUp {
+    0% {
       opacity: 0;
+      transform: translateY(40px);
     }
-    to {
+    100% {
       opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
       transform: translateY(0);
-      opacity: 1;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .progress-section {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .container {
+      padding: 30px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .progress-card {
+      width: 100%;
     }
   }
   
