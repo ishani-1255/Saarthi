@@ -48,7 +48,7 @@ The inspiration behind this project stems from the challenges faced by underserv
 - **Framework**: Bootstrap
 - **Cloud Services**: Cloudinary
 - **Deployment**: Render       
-- **Other Tools**: Libraries, Python
+- **Other Tools**: Python
 
 ### **Challenges We Faced**
 
