@@ -296,6 +296,7 @@ body {
     background: #22c55e;
     border-radius: 50%;
 }
+
 .chat-messages {
     flex: 1;
     overflow-y: auto;
@@ -303,39 +304,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    z-index: 500;
-    position: relative;
-    font-weight: bolder;
-
-    /* Set up the background image */
-    background-image: url('../img/chatbot.png');
-    background-position: center;
-    background-size: 70%;
-    background-repeat: no-repeat;
-
-    /* Muted effect for the image */
-    background-color: rgba(255, 255, 255, 0.8); /* Light base layer for visibility */
-    background-blend-mode: overlay; /* Blend mode for muted effect */
-    opacity: 1; /* Ensure the image is visible */
 }
-
-.chat-messages .message-content {
-    font-weight: bolder;
-    color: red;
-    opacity: 1; /* Ensure messages are fully opaque */
-    z-index: 1000; /* Ensure messages are above the background */
-}
-
-
-/* Optional: Style for better contrast */
-.chat-messages::-webkit-scrollbar {
-    width: 6px;
-}
-.chat-messages::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-}
-
 
 .message {
     display: flex;
@@ -466,6 +435,22 @@ input:focus {
     }
 }
 
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #E3D8F1;
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #9A328A;
+}
 
 @media (max-width: 768px) {
     .nav-toggle-label {
@@ -564,5 +549,12 @@ input:focus {
     .chat-container {
         border-radius: 0;
     }
+}
+.chat-messages {
+    background-image: url('../img/chatbot.png');
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    opacity: 0.15;  /* Reduces opacity of the entire container */
 }
 
