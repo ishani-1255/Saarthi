@@ -44,10 +44,11 @@ The inspiration behind this project stems from the challenges faced by underserv
 
 - **Frontend**: CSS, JavaScript, ejs  
 - **Backend**: NodeJS, ExpressJS, MongoDB Atlas,Vector DB, Flask API
-- **AI Tools**: Plotch.ai, Groclake, Gemini API, Clovinary
+- **AI Tools**: Plotch.ai, Groclake, Gemini API
 - **Framework**: Bootstrap
+- **Cloud Services**: Cloudinary
 - **Deployment**: Render       
-- **Other Tools**: Libraries, Python
+- **Other Tools**: Python
 
 ### **Challenges We Faced**
 
