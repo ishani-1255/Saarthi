@@ -3,22 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask Me Anything</title>
+    <title>AI Chat Assistant</title>
     <link rel="stylesheet" href="/css/ask.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Ask Me Anything</h1>
-        <form id="questionForm" method="post" action="/ask">
-            <label for="question">Ask your question:</label>
-            <input type="text" id="question" name="question" required>
-            <button type="submit">Submit</button>
-        </form>
-        <div class="result">
-            <h2>Answer</h2>
-            <textarea id="answerTextarea" rows="6" readonly class="answer"></textarea>
-        </div>
+    <div class="shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
-    <script src="/app.js"></script>
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>AI Chat Assistant</h1>
+            <p>Experience the future of learning with our intelligent AI assistant!</p>
+        </header>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <div class="form-container">
+                <form id="questionForm">
+                    <label for="question">What would you like to know?</label>
+                    <input type="text" id="question" name="question" placeholder="Ask me anything..." required>
+                    <button type="submit">Get Answer</button>
+                </form>
+                <div class="loading-spinner" id="spinner"></div>
+                <div class="result">
+                    <h2>Answer</h2>
+                    <textarea id="answerTextarea" rows="6" readonly class="answer"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Section -->
+        <section class="image-section">
+            <div class="image-gallery">
+                <img src="https://www.istockphoto.com/photo/artificial-intelligence-processor-concept-ai-big-data-array-gm1976099664-558735799?utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fai&utm_medium=affiliate&utm_source=unsplash&utm_term=ai%3A%3A%3A" alt="AI Technology" style="width:100%; height:auto;">
+                <img src="https://images.unsplash.com/photo-1579169060782-1b8d3f416a9e" alt="Machine Learning" style="width:100%; height:auto;">
+                <img src="https://images.unsplash.com/photo-1521317810402-5eac2d5c2183" alt="Data Science" style="width:100%; height:auto;">
+                <img src="https://images.unsplash.com/photo-1571171637578-35b5d2f28509" alt="Neural Networks" style="width:100%; height:auto;">
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>Powered by Advanced AI &copy; 2025. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        const form = document.getElementById("questionForm");
+        const answerTextarea = document.getElementById("answerTextarea");
+        const spinner = document.getElementById("spinner");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const questionInput = document.getElementById("question").value;
+
+            // Clear previous answer and show spinner
+            answerTextarea.value = "";
+            spinner.style.display = "block";
+
+            try {
+                const response = await fetch("/ask", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ question: questionInput }),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    answerTextarea.value = data.bot_reply || "No response from the chatbot.";
+                } else {
+                    answerTextarea.value = "Error: " + (data.error || "Something went wrong.");
+                }
+            } catch (error) {
+                answerTextarea.value = "Error: Unable to communicate with the server.";
+                console.error("Fetch error:", error);
+            } finally {
+                spinner.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>

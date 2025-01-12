@@ -122,7 +122,7 @@ app.get("/main", (req, res) => res.render("index.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/emergency", isLoggedIn, (req, res) => res.render("emergency.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
-app.get("/landingPage", isLoggedIn, (req, res) => res.render("landing_page.ejs"));
+app.get("/landingPage", (req, res) => res.render("landing_page.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
 app.get("/testimonial", isLoggedIn, (req, res) =>
   res.render("testimonial.ejs")
@@ -156,6 +156,29 @@ app.post("/practice", async (req, res) => {
     res.status(500).send("Error generating quiz. Please try again.");
   }
 });
+
+app.post(
+  "/ask",
+  isLoggedIn,
+  asyncHandler(async (req, res) => {
+      const userInput = req.body.question; // Expecting 'question' from the frontend
+      try {
+          // Send user input to Python chatbot
+          const pythonResponse = await axios.post("http://localhost:8000/chat", {
+              user_input: userInput,
+          });
+
+          const botReply =
+              pythonResponse.data.bot_reply || "No response from the chatbot.";
+
+          // Send bot's reply back to the frontend
+          res.json({ bot_reply: botReply });
+      } catch (error) {
+          console.error("Error communicating with Python chatbot:", error.message);
+          res.status(500).json({ error: "Failed to communicate with the chatbot." });
+      }
+  })
+);
 
 app.post("/submit-quiz", (req, res) => {
   const userAnswers = req.body.userAnswers;
@@ -258,18 +281,6 @@ app.post(
   })
 );
 
-// Chat route
-// app.post(
-//   "/chat",
-//   isLoggedIn,
-//   asyncHandler(async (req, res) => {
-//     const userInput = req.body.message;
-//     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-//     const result = await model.generateContent(userInput);
-//     const response = await result.response;
-//     res.json({ message: response.text() });
-//   })
-// );
 
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.user_input;
@@ -296,19 +307,6 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// app.post("/emergency", async (req, res) => {
-//   const { search_query } = req.body;
-
-//   try {
-//       const response = await axios.post("http://127.0.0.1:5000/emergency", {
-//           search_query,
-//       });
-//       res.json(response.data);
-//   } catch (error) {
-//       res.status(500).json({ error: error.message });
-//   }
-// });
-
 app.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
@@ -324,25 +322,29 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 // Form submission route
-app.post(
-  "/form",
-  isLoggedIn,
-  upload.single("image"),
-  asyncHandler(async (req, res) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const imageParts = [
-      {
-        inlineData: {
-          data: fs.readFileSync(req.file.path).toString("base64"),
-          mimeType: "image/jpeg",
-        },
-      },
-    ];
-    const result = await model.generateContent(imageParts);
+app.post('/form', isLoggedIn, upload.single('image'), async (req, res) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const prompt = '';
+    const imageParts = [{
+      inlineData: {
+        data: fs.readFileSync(req.file.path).toString('base64'),
+        mimeType: 'image/jpeg'
+      }
+    }];
+
+    console.log(req.file.path);
+
+    const result = await model.generateContent([prompt, ...imageParts]);
     const response = await result.response;
-    res.json({ result: response.text() });
-  })
-);
+    const text = response.text();
+
+    res.json({ result: text }); // Sends JSON response
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' }); // Error response
+  }
+});
 
 // Logout route
 app.get("/logout", (req, res, next) => {
@@ -351,7 +353,7 @@ app.get("/logout", (req, res, next) => {
       console.error("Error logging out:", err);
       return next(err);
     }
-    res.redirect("/landing_page");
+    res.redirect("/landingPage");
   });
 });
 
@@ -370,3 +372,35 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+function fileToGenerativePart(path, mimeType) {
+  return {
+    inlineData: {
+      data: Buffer.from(fs.readFileSync(path)).toString("base64"),
+      mimeType
+    },
+  };
+}
+
+
+async function problemSolving() {
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const prompt = "";
+  const imageParts = [
+    fileToGenerativePart("prob.jpg", "image/jpeg"),
+  ];
+  const result = await model.generateContent([prompt, ...imageParts]);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  return text;
+}
+
+
+async function textQuery(query) {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const result = await model.generateContent(query);
+  const response = await result.response;
+  const text = response.text();
+  return text;
+}
