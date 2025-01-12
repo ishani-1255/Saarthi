@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translator</title>
+</head>
+<body>
+    <h1>Language Translator</h1>
+    <form id="translation-form">
+        <textarea id="text" placeholder="Enter text to translate" rows="4" cols="50"></textarea><br>
+        <label for="sourceLang">Source Language:</label>
+        <select id="sourceLang">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="fr">French</option>
+            <!-- Add other source languages -->
+        </select>
+        <br>
+        <label for="targetLang">Target Language:</label>
+        <select id="targetLang">
+            <option value="hi">Hindi</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <!-- Add other target languages -->
+        </select>
+        <br>
+        <button type="submit">Translate</button>
+    </form>
+    <h2>Translated Text:</h2>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById('translation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const text = document.getElementById('text').value;
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+
+            const response = await fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text, sourceLang, targetLang }),
+            });
+
+            const data = await response.json();
+            document.getElementById('output').innerText = data.translatedText || 'Translation failed.';
+        });
+    </script>
+</body>
+</html>

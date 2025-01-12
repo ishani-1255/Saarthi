@@ -122,6 +122,7 @@ app.get("/main", (req, res) => res.render("index.ejs"));
 app.get("/about", isLoggedIn, (req, res) => res.render("about.ejs"));
 app.get("/emergency", isLoggedIn, (req, res) => res.render("emergency.ejs"));
 app.get("/contact", isLoggedIn, (req, res) => res.render("contact.ejs"));
+app.get("/translate", isLoggedIn, (req, res) => res.render("translate.ejs"));
 app.get("/landingPage", (req, res) => res.render("landing_page.ejs"));
 app.get("/team", isLoggedIn, (req, res) => res.render("team.ejs"));
 app.get("/testimonial", isLoggedIn, (req, res) =>
@@ -138,6 +139,25 @@ app.get("/login", (req, res) => res.render("login.ejs"));
 app.get("/signup", (req, res) => res.render("signup.ejs"));
 app.get("/grading", isLoggedIn, (req, res) => res.render("grading.ejs"));
 app.get("/practice", isLoggedIn, (req, res) => {res.render("practice.ejs");
+});
+
+app.post('/translate', async (req, res) => {
+  try {
+      const { text, sourceLang, targetLang } = req.body;
+
+      // Send the request to the Flask server
+      const flaskResponse = await axios.post('http://localhost:5500/translate', {
+          text: text,
+          source_lang: sourceLang,
+          target_lang: targetLang,
+      });
+
+      // Return the translated text back to the frontend
+      res.json({ translatedText: flaskResponse.data.translated_text });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Failed to process translation.' });
+  }
 });
 
 app.post("/practice", async (req, res) => {
